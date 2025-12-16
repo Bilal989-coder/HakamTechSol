@@ -264,7 +264,7 @@ const BlogDetails = () => {
       <div className="cs_height_150 cs_height_lg_60"></div>
 
 
-      <BlogHomeOne style_3={true} />
+      
 
     </>
   );
