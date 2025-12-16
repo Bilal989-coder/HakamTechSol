@@ -1,0 +1,286 @@
+/* SCSS for CaseStudyPro
+   Tip: if you use CSS Modules instead, rename to case-study.module.scss
+   and import it as styles then map classNames. For global SCSS, keep this import in _app.tsx or the component.
+*/
+
+/* ===== Theme tokens ===== */
+:root {
+  --accent: #ff7a00;
+  --ink: #1f2b3a;
+  --ink-2: #3c4f63;
+  --muted: #6a7a8c;
+  --glass: #ffffffcc;
+  --card: #ffffff;
+  --ring: rgba(255, 122, 0, 0.18);
+  --shadow: 0 24px 60px rgba(3, 20, 40, 0.12);
+  --radius: 26px;
+}
+
+/* ===== Section base ===== */
+.csx {
+  position: relative;
+  padding: 72px 0 96px;
+  overflow: hidden;
+
+  &.is-dark {
+    --ink: #f8fbff;
+    --ink-2: #dbe6f5;
+    --muted: #b7c4d7;
+    --glass: rgba(18, 22, 29, 0.6);
+    --card: #0f141b;
+    --ring: rgba(255, 122, 0, 0.28);
+    background:
+      radial-gradient(950px 340px at 10% -10%, rgba(255, 122, 0, 0.14), transparent 60%),
+      radial-gradient(950px 340px at 90% 110%, rgba(59, 130, 246, 0.12), transparent 60%),
+      #0b0f16;
+  }
+
+  &.is-light {
+    background:
+      radial-gradient(1100px 380px at 15% -10%, rgba(255, 122, 0, 0.10), transparent 60%),
+      linear-gradient(180deg, #fbfdff, #f3f6fa);
+  }
+
+  &.is-compact {
+    .card-row { padding: 22px; gap: 22px; }
+  }
+}
+
+/* ===== Layout containers ===== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ===== Heading ===== */
+.head {
+  position: relative;
+  margin-bottom: 26px;
+
+  .title {
+    margin: 0;
+    font-size: clamp(28px, 3.6vw, 56px);
+    font-weight: 900;
+    line-height: 1.06;
+    color: var(--ink);
+    letter-spacing: .2px;
+    background: linear-gradient(135deg, var(--ink) 0%, var(--accent) 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .ghost {
+    position: absolute;
+    inset: -6px auto auto 0;
+    font-size: clamp(64px, 12vw, 160px);
+    font-weight: 900;
+    line-height: .9;
+    opacity: .05;
+    color: var(--ink);
+    pointer-events: none;
+  }
+}
+
+/* ===== Rows ===== */
+.stack { display: grid; gap: 54px; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.card-row {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: 1.15fr 1fr;
+  align-items: center;
+  animation: rise .6s ease both;
+
+  &.invert { grid-template-columns: 1fr 1.15fr; }
+
+  @media (max-width: 1024px) {
+    &, &.invert { grid-template-columns: 1fr; }
+  }
+}
+
+/* ===== Media (spotlight + shine) ===== */
+.media   { order: 1; }
+.invert .media { order: 2; }
+
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #e8eef6;
+  box-shadow: var(--shadow);
+  transform: translateZ(0);
+
+  .img {
+    object-fit: cover;
+    transition: transform .6s cubic-bezier(.2,.6,.2,1);
+  }
+
+  .shine {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,.18) 45%, transparent 70%);
+    mix-blend-mode: screen;
+    opacity: 0;
+    transition: opacity .35s ease;
+  }
+
+  .ring {
+    position: absolute;
+    inset: -40% -30% auto auto;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(closest-side, var(--ring), transparent 65%);
+    filter: blur(14px);
+    opacity: .8;
+    pointer-events: none;
+  }
+
+  &:hover {
+    .img   { transform: scale(1.04); }
+    .shine { opacity: .9; }
+  }
+}
+
+/* ===== Content (glass card) ===== */
+.content { order: 2; }
+.invert  .content { order: 1; }
+
+.glass {
+  border-radius: var(--radius);
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,.14);
+  padding: 22px 22px 20px;
+  box-shadow: 0 8px 24px rgba(3,20,40,.10);
+  backdrop-filter: blur(8px);
+}
+
+.h3 {
+  margin: 2px 0 12px;
+  color: var(--ink);
+  font-weight: 900;
+  font-size: clamp(26px, 3vw, 44px);
+  line-height: 1.05;
+}
+
+/* ===== Tags ===== */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(0,0,0,.06);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 14px;
+    backdrop-filter: blur(6px);
+
+    i {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+  }
+}
+
+/* ===== Body copy ===== */
+.desc {
+  margin: 0 0 16px;
+  color: var(--ink-2);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+/* ===== Metrics ===== */
+.metrics {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 18px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+  .metric {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.65);
+    border: 1px solid rgba(0,0,0,.06);
+    color: var(--muted);
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(12,20,35,.06) inset;
+    transition: transform .18s ease, box-shadow .18s ease;
+
+    &:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(12,20,35,.10) inset; }
+
+    .val {
+      background: linear-gradient(90deg, #111827, #233048);
+      color: #fff;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: .2px;
+    }
+
+    .lab { font-size: 14px; }
+  }
+}
+
+/* ===== CTA ===== */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #c76767, #482f1e);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 900;
+  letter-spacing: .2px;
+  box-shadow: 0 10px 26px rgba(255,107,0,.28);
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(255,107,0,.34);
+    filter: brightness(1.03);
+  }
+
+  &:focus-visible {
+    outline: 3px solid #ffd7bf;
+    outline-offset: 3px;
+  }
+
+  .arr { transition: transform .18s ease; }
+  &:hover .arr { transform: translateX(4px); }
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  .frame .img,
+  .frame .shine,
+  .cta,
+  .card-row {
+    transition: none !important;
+    animation: none !important;
+  }
+}
