@@ -31,7 +31,6 @@ const index = () => {
             <ServiceHomeFour />
             <PortfolioHomeFour />
             <Testimonial />
-            <BlogHomeOne style_2={true} />
             <AboutHomeFour />
           </main>
           <FooterOne />
